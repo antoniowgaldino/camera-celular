@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abrir Câmera Frontal</title>
+    <style>
+        #videoElement {
+            width: 100%;
+            height: auto;
+            border: 1px solid black;
+        }
+        #startButton {
+            display: block;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <button id="startButton">Abrir Câmera Frontal</button>
+    <video id="videoElement" autoplay></video>
+
+    <script>
+        document.getElementById('startButton').addEventListener('click', () => {
+            // Acessa a câmera frontal
+            navigator.mediaDevices.getUserMedia({
+                video: {
+                    facingMode: 'user' // 'user' para a câmera frontal, 'environment' para a câmera traseira
+                }
+            }).then(stream => {
+                // Obtém o elemento de vídeo
+                const video = document.getElementById('videoElement');
+                // Define a fonte do vídeo para o stream obtido
+                video.srcObject = stream;
+                // Inicia a reprodução do vídeo
+                video.play();
+            }).catch(error => {
+                console.error('Erro ao acessar a câmera:', error);
+            });
+        });
+    </script>
+</body>
+</html>
